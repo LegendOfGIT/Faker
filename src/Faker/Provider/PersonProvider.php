@@ -18,9 +18,8 @@ interface PersonProvider
     function firstName($gender = null);
 
     /**
-     * @param string|null $gender
      * @return string
      * @example 'Doe'
      */
-    function lastName($gender = null);
+    function lastName();
 }

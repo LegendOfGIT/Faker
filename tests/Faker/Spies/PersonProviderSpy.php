@@ -30,11 +30,10 @@ class PersonProviderSpy implements Provider, PersonProvider
     }
 
     /**
-     * @param string|null $gender
      * @return string
      * @example 'Doe'
      */
-    function lastName($gender = null)
+    function lastName()
     {
         $this->calledFormatters[] = __FUNCTION__;
         return static::LAST_NAME;
