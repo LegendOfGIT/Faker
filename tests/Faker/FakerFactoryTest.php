@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
  */
 class FakerFactoryTest extends TestCase
 {
-    public function testFirstTest()
+    public function testFactoryReturnsNewInstanceOfFaker()
     {
-        $this->assertTrue(true);
+        $this->assertInstanceOf(Faker::class, FakerFactory::build());
     }
 }
