@@ -3,6 +3,7 @@
 namespace Faker;
 
 use Faker\Exception\InterfaceNotImplementedException;
+use Faker\Spies\PersonProviderSpy;
 use Faker\Stubs\ProviderStub;
 use Faker\Stubs\TestStub;
 use InvalidArgumentException;
@@ -13,23 +14,20 @@ use PHPUnit\Framework\TestCase;
  */
 class FakerTest extends TestCase
 {
-    const GLOBALS_CALL_USER_FUNC_CALL_HISTORY = 'callUserFuncCallHistory';
-    const GLOBALS_METHOD_EXISTS_CALL_HISTORY = 'methodExistsCallHistory';
-
-    public function tearDown()
-    {
-        unset($GLOBALS[static::GLOBALS_CALL_USER_FUNC_CALL_HISTORY]);
-        unset($GLOBALS[static::GLOBALS_METHOD_EXISTS_CALL_HISTORY]);
-    }
-
     /**
      * @var Faker
      */
     private $faker;
 
+    /**
+     * @var PersonProviderSpy
+     */
+    private $personProviderSpy;
+
     public function setUp()
     {
         $this->faker = new Faker();
+        $this->personProviderSpy = new PersonProviderSpy();
     }
 
     /**
@@ -50,34 +48,6 @@ class FakerTest extends TestCase
         $this->assertSame([$provider], $this->faker->getProviders());
     }
 
-    public function testFakerCallsMethodExistsToFindMatchingFormatter()
-    {
-        $this->faker->firstName;
-        $this->assertSame(
-            [
-                [
-                    'object' => $this->faker,
-                    'method_name' => 'firstName'
-                ]
-            ],
-            $GLOBALS[static::GLOBALS_METHOD_EXISTS_CALL_HISTORY]
-        );
-    }
-
-    public function testFakerCallsCallUserFuncWhenMatchingFormatterWasFound()
-    {
-        $this->faker->firstName;
-        $this->assertSame(
-            [
-                [
-                    'function' => [$this->faker, 'firstName'],
-                    'parameter' => []
-                ]
-            ],
-            $GLOBALS[static::GLOBALS_CALL_USER_FUNC_CALL_HISTORY]
-        );
-    }
-
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Unknown formatter "foobar"
@@ -87,52 +57,51 @@ class FakerTest extends TestCase
         $this->faker->foobar;
     }
 
+    /**
+     * @throws InterfaceNotImplementedException
+     */
     public function testFakerReturnsValueWhenGetIsCalledWithKnownFormatter()
     {
-        $this->assertSame('adam', $this->faker->firstName);
-    }
-}
-
-/**
- * @param mixed $object
- * @param string $method_name
- * @return bool
- */
-function method_exists($object, $method_name)
-{
-    $validTestingMethods = ['firstName'];
-
-    global $methodExistsCallHistory;
-    $methodExistsCallHistory[] = [
-        'object' => $object,
-        'method_name' => $method_name
-    ];
-
-    return in_array($method_name, $validTestingMethods);
-}
-
-/**
- * @param callback $function
- * @param mixed ...$parameter
- * @return mixed|null
- */
-function call_user_func($function, ...$parameter)
-{
-    global $callUserFuncCallHistory;
-    $callUserFuncCallHistory[] = [
-        'function' => $function,
-        'parameter' => $parameter
-    ];
-
-    $testValueMapping = [
-        'firstName' => 'adam'
-    ];
-
-    $functionName = $function[1];
-
-    if (array_key_exists($functionName, $testValueMapping)) {
-        return $testValueMapping[$functionName];
+        $this->faker->addProvider($this->personProviderSpy);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME, $this->faker->firstName);
     }
 
-    return null;
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage No provider for formatter "firstName"
+     */
+    public function testFakerThrowsExceptionWhenNoProviderFoundForFormatter()
+    {
+        $this->faker->firstName;
+    }
+
+    /**
+     * @dataProvider getPersonProviderFormatterProvider
+     * @param string $formatterName
+     * @param bool $isPersonProviderCalled
+     * @throws InterfaceNotImplementedException
+     */
+    public function testFakerCallsPersonProviderOnlyForRelatedFormatters($formatterName, $isPersonProviderCalled)
+    {
+        $this->faker->addProvider($this->personProviderSpy);
+
+        $this->faker->$formatterName;
+
+        $this->assertSame(
+            $isPersonProviderCalled,
+            in_array($formatterName, $this->personProviderSpy->getCalledFormatters())
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getPersonProviderFormatterProvider()
+    {
+        return [
+            ['firstName', true],
+            ['lastName', true],
+        ];
+    }
+
 }
