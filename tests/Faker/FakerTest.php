@@ -2,6 +2,9 @@
 
 namespace Faker;
 
+use Faker\Exception\InterfaceNotImplementedException;
+use Faker\Stubs\ProviderStub;
+use Faker\Stubs\TestStub;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -29,9 +32,22 @@ class FakerTest extends TestCase
         $this->faker = new Faker();
     }
 
-    public function testCanBeInstantiated()
+    /**
+     * @expectedException \Faker\Exception\InterfaceNotImplementedException
+     */
+    public function testFakerThrowsExceptionWhenProviderWithoutProviderInterfaceIsAdded()
     {
-        $this->assertInstanceOf(Faker::class, $this->faker);
+        $this->faker->addProvider(new TestStub());
+    }
+
+    /**
+     * @throws InterfaceNotImplementedException
+     */
+    public function testFakerAddsAProviderImplementingProviderInterface()
+    {
+        $provider = new ProviderStub();
+        $this->faker->addProvider($provider);
+        $this->assertSame([$provider], $this->faker->getProviders());
     }
 
     public function testFakerCallsMethodExistsToFindMatchingFormatter()
