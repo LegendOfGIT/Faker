@@ -10,7 +10,8 @@ use Faker\Provider\Provider;
  */
 class PersonProviderSpy implements Provider, PersonProvider
 {
-    const FIRST_NAME = 'John';
+    const FIRST_NAME_FEMALE = 'Janette';
+    const FIRST_NAME_MALE = 'John';
     const LAST_NAME = 'Doe';
 
     /**
@@ -19,14 +20,23 @@ class PersonProviderSpy implements Provider, PersonProvider
     private $calledFormatters = [];
 
     /**
-     * @param string|null $gender
+     * @return string
+     * @example 'Janette'
+     */
+    function firstNameFemale()
+    {
+        $this->calledFormatters[] = __FUNCTION__;
+        return static::FIRST_NAME_FEMALE;
+    }
+
+    /**
      * @return string
      * @example 'John'
      */
-    function firstName($gender = null)
+    function firstNameMale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::FIRST_NAME;
+        return static::FIRST_NAME_MALE;
     }
 
     /**

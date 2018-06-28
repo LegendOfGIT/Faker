@@ -10,6 +10,8 @@ use InvalidArgumentException;
 /**
  * Faker
  * @property string firstName
+ * @property string firstNameFemale
+ * @property string firstNameMale
  * @property string lastName
  */
 class Faker
@@ -21,6 +23,8 @@ class Faker
 
     protected $providerMapping = [
         'firstName' => PersonProvider::class,
+        'firstNameFemale' => PersonProvider::class,
+        'firstNameMale' => PersonProvider::class,
         'lastName' => PersonProvider::class,
     ];
 

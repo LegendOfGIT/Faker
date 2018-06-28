@@ -63,7 +63,8 @@ class FakerTest extends TestCase
     public function testFakerReturnsValueWhenGetIsCalledWithKnownFormatter()
     {
         $this->faker->addProvider($this->personProviderSpy);
-        $this->assertSame(PersonProviderSpy::FIRST_NAME, $this->faker->firstName);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME_FEMALE, $this->faker->firstNameFemale);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstNameMale);
     }
 
     /**
@@ -78,19 +79,14 @@ class FakerTest extends TestCase
     /**
      * @dataProvider getPersonProviderFormatterProvider
      * @param string $formatterName
-     * @param bool $isPersonProviderCalled
      * @throws InterfaceNotImplementedException
      */
-    public function testFakerCallsPersonProviderOnlyForRelatedFormatters($formatterName, $isPersonProviderCalled)
+    public function testFakerCallsPersonProviderOnlyForRelatedFormatters($formatterName)
     {
         $this->faker->addProvider($this->personProviderSpy);
-
         $this->faker->$formatterName;
 
-        $this->assertSame(
-            $isPersonProviderCalled,
-            in_array($formatterName, $this->personProviderSpy->getCalledFormatters())
-        );
+        $this->assertContains($formatterName, $this->personProviderSpy->getCalledFormatters());
     }
 
     /**
@@ -99,8 +95,9 @@ class FakerTest extends TestCase
     public function getPersonProviderFormatterProvider()
     {
         return [
-            ['firstName', true],
-            ['lastName', true],
+            ['firstNameFemale'],
+            ['firstNameMale'],
+            ['lastName'],
         ];
     }
 

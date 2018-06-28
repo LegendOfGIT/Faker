@@ -7,15 +7,17 @@ namespace Faker\Provider;
  */
 interface PersonProvider
 {
-    const GENDER_FEMALE = 'female';
-    const GENDER_MALE = 'male';
+    /**
+     * @return string
+     * @example 'Janette'
+     */
+    function firstNameFemale();
 
     /**
-     * @param string|null $gender
      * @return string
      * @example 'John'
      */
-    function firstName($gender = null);
+    function firstNameMale();
 
     /**
      * @return string

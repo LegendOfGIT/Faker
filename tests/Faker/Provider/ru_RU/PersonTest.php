@@ -2,7 +2,6 @@
 
 namespace Faker\Provider\ru_RU;
 
-use Faker\Provider\PersonProvider;
 use Faker\Provider\Provider;
 use PHPUnit\Framework\TestCase;
 
@@ -32,12 +31,11 @@ class PersonTest extends TestCase
 
     public function testProviderReturnsFemaleFirstName()
     {
-        $this->assertSame('Александра', $this->provider->firstName(PersonProvider::GENDER_FEMALE));
+        $this->assertSame('Александра', $this->provider->firstNameFemale());
     }
 
     public function testProviderReturnsMaleFirstName()
     {
-        $this->assertSame('Абрам', $this->provider->firstName(PersonProvider::GENDER_MALE));
-        $this->assertSame('Абрам', $this->provider->firstName());
+        $this->assertSame('Абрам', $this->provider->firstNameMale());
     }
 }

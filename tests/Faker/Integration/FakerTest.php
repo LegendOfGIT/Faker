@@ -37,7 +37,8 @@ class FakerTest extends TestCase
     public function testFakerReturnsValuesForPersonFormatters()
     {
         $this->faker->addProvider(new Person());
-        $this->assertSame('Абрам', $this->faker->firstName);
+        $this->assertSame('Александра', $this->faker->firstNameFemale);
+        $this->assertSame('Абрам', $this->faker->firstNameMale);
         $this->assertSame('Смирнов', $this->faker->lastName);
     }
 }

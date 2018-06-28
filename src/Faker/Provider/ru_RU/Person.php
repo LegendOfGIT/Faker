@@ -86,18 +86,21 @@ class Person implements Provider, PersonProvider
     ];
 
     /**
-     * @param string|null $gender
+     * @return string
+     * @example 'Janette'
+     */
+    function firstNameFemale()
+    {
+        return Person::$firstNameFemale[0];
+    }
+
+    /**
      * @return string
      * @example 'John'
      */
-    function firstName($gender = null)
+    function firstNameMale()
     {
-        $values =
-            PersonProvider::GENDER_FEMALE === $gender
-                ? Person::$firstNameFemale
-                : Person::$firstNameMale;
-
-        return $values[0];
+        return Person::$firstNameMale[0];
     }
 
     /**
