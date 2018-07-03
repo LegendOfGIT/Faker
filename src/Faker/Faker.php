@@ -17,16 +17,35 @@ use InvalidArgumentException;
 class Faker
 {
     /**
+     * @var array
+     */
+    protected $genderNameMapping = [
+        'firstName' => 'firstNameMale'
+    ];
+
+    /**
      * @var Provider[]
      */
     protected $providers = [];
 
+    /**
+     * @var array
+     */
     protected $providerMapping = [
-        'firstName' => PersonProvider::class,
         'firstNameFemale' => PersonProvider::class,
         'firstNameMale' => PersonProvider::class,
         'lastName' => PersonProvider::class,
     ];
+
+    /**
+     * @param array|null $providerMapping
+     */
+    public function __construct(array $providerMapping = null)
+    {
+        if (null !== $providerMapping) {
+            $this->providerMapping = $providerMapping;
+        }
+    }
 
     /**
      * @param Provider|mixed $provider
@@ -56,9 +75,24 @@ class Faker
      */
     public function __get($name)
     {
+        $name = $this->getDefaultGenderName($name);
+
         $provider = $this->getProviderByFormatter($name);
 
         return call_user_func([$provider, $name]);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function getDefaultGenderName($name)
+    {
+        if (array_key_exists($name, $this->genderNameMapping)) {
+            return $this->genderNameMapping[$name];
+        }
+
+        return $name;
     }
 
     /**

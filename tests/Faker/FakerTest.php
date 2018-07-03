@@ -3,6 +3,7 @@
 namespace Faker;
 
 use Faker\Exception\InterfaceNotImplementedException;
+use Faker\Provider\PersonProvider;
 use Faker\Spies\PersonProviderSpy;
 use Faker\Stubs\ProviderStub;
 use Faker\Stubs\TestStub;
@@ -26,7 +27,12 @@ class FakerTest extends TestCase
 
     public function setUp()
     {
-        $this->faker = new Faker();
+        $this->faker = new Faker([
+            'firstNameFemale' => PersonProvider::class,
+            'firstNameMale' => PersonProvider::class,
+            'lastName' => PersonProvider::class,
+            'fooBar' => PersonProvider::class,
+        ]);
         $this->personProviderSpy = new PersonProviderSpy();
     }
 
@@ -65,15 +71,16 @@ class FakerTest extends TestCase
         $this->faker->addProvider($this->personProviderSpy);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_FEMALE, $this->faker->firstNameFemale);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstNameMale);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstName);
     }
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage No provider for formatter "firstName"
+     * @expectedExceptionMessage No provider for formatter "fooBar"
      */
     public function testFakerThrowsExceptionWhenNoProviderFoundForFormatter()
     {
-        $this->faker->firstName;
+        $this->faker->fooBar;
     }
 
     /**
