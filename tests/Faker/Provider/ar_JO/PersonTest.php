@@ -29,13 +29,38 @@ class PersonTest extends TestCase
         );
     }
 
-    public function testProviderReturnsFemaleFirstName()
+    public function testProviderReturnsAcademicTitleFemale()
+    {
+        $this->assertSame('السيدة', $this->provider->academicTitleFemale());
+    }
+
+    public function testProviderReturnsAcademicTitleMale()
+    {
+        $this->assertSame('السيد', $this->provider->academicTitleMale());
+    }
+
+    public function testProviderReturnsFirstNameFemale()
     {
         $this->assertSame('آثار', $this->provider->firstNameFemale());
     }
 
-    public function testProviderReturnsMaleFirstName()
+    public function testProviderReturnsFirstNameMale()
     {
         $this->assertSame('آدم', $this->provider->firstNameMale());
+    }
+
+    public function testProviderReturnsLastName()
+    {
+        $this->assertSame('آلهامي', $this->provider->lastName());
+    }
+
+    public function testProviderReturnsSalutationFemale()
+    {
+        $this->assertSame('الدكتورة', $this->provider->salutationFemale());
+    }
+
+    public function testProviderReturnsSalutationMale()
+    {
+        $this->assertSame('المهندس', $this->provider->salutationMale());
     }
 }

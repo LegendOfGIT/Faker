@@ -10,14 +10,38 @@ use Faker\Provider\Provider;
  */
 class PersonProviderSpy implements Provider, PersonProvider
 {
+    const ACADEMIC_TITLE_FEMALE = 'Dr.';
+    const ACADEMIC_TITLE_MALE = 'Prof. Dr.';
     const FIRST_NAME_FEMALE = 'Janette';
     const FIRST_NAME_MALE = 'John';
     const LAST_NAME = 'Doe';
+    const SALUTATION_FEMALE = 'Mrs.';
+    const SALUTATION_MALE = 'Mr.';
 
     /**
      * @var string[]
      */
     private $calledFormatters = [];
+
+    /**
+     * @return string
+     * @example 'Dr.'
+     */
+    function academicTitleFemale()
+    {
+        $this->calledFormatters[] = __FUNCTION__;
+        return static::ACADEMIC_TITLE_FEMALE;
+    }
+
+    /**
+     * @return string
+     * @example 'Prof. Dr.'
+     */
+    function academicTitleMale()
+    {
+        $this->calledFormatters[] = __FUNCTION__;
+        return static::ACADEMIC_TITLE_MALE;
+    }
 
     /**
      * @return string
@@ -47,6 +71,26 @@ class PersonProviderSpy implements Provider, PersonProvider
     {
         $this->calledFormatters[] = __FUNCTION__;
         return static::LAST_NAME;
+    }
+
+    /**
+     * @return string
+     * @example 'Mrs.'
+     */
+    function salutationFemale()
+    {
+        $this->calledFormatters[] = __FUNCTION__;
+        return static::SALUTATION_FEMALE;
+    }
+
+    /**
+     * @return string
+     * @example 'Mr.'
+     */
+    function salutationMale()
+    {
+        $this->calledFormatters[] = __FUNCTION__;
+        return static::SALUTATION_MALE;
     }
 
     /**

@@ -6,14 +6,17 @@ use Faker\Provider\PersonProvider;
 use Faker\Provider\Provider;
 
 /**
- * Russian person provider
+ * Arabic Jordan person provider
  */
 class Person implements Provider, PersonProvider
 {
+    protected static $academicTitlesFemale = ['السيدة', 'الآنسة'];
+
+    protected static $academicTitlesMale = ['السيد', 'الأستاذ', 'الدكتور'];
+
     /**
-     * {@link} http://ru.wikipedia.org/wiki/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5_%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B5_%D0%B8%D0%BC%D1%8F
-     * {@link} http://masterrussian.com/aa031701a.shtml
-     **/
+     * @link http://muslim-names.us/
+     */
     protected static $firstNameMale = [
         'آدم', 'أبراهيم', 'أبو بكر', 'أحمد', 'أدهم', 'أسامة', 'أسعد', 'أسيد', 'أشرف', 'أكثم', 'أكرم', 'أمجد', 'أمين',
         'أنتوني', 'أنزور', 'أنس', 'أنمار', 'أنور', 'أواس', 'أوس', 'أيمن', 'أيهم', 'أيوب', 'إبراهيم', 'إسلام', 'إسماعيل',
@@ -74,8 +77,8 @@ class Person implements Provider, PersonProvider
     ];
 
     /**
-     * {@link} http://masterrussian.com/aa031001a.shtml
-     **/
+     * @link http://muslim-names.us/
+     */
     protected static $firstNameFemale = [
         'آثار', 'آلاء', 'آناء', 'آية', 'أبرار', 'أحلام', 'أروى', 'أريج', 'أسماء', 'أسيل', 'أصاله', 'أفنان', 'ألاء',
         'أماني', 'أمل', 'أميرة', 'أنسام', 'أنطوانيت', 'أنوار', 'أيات', 'أية', 'أيناس', 'أيه', 'ؤقهسفغ', 'إباء', 'إخلاص',
@@ -119,9 +122,6 @@ class Person implements Provider, PersonProvider
         'وفاء', 'ولاء', 'ىمنة', 'يارا', 'ياسمين', 'يافا', 'يسرى', 'ينان', 'ﻟﻮﺗﺸﻴﺎ',
     ];
 
-    /**
-     * {@link} http://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BE%D0%B1%D1%89%D0%B5%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D1%85_%D1%84%D0%B0%D0%BC%D0%B8%D0%BB%D0%B8%D0%B9
-     **/
     protected static $lastName = [
         'آلهامي', 'أبو الرب', 'ابو رحمة', 'ابو سعده', 'ابو يوسف', 'ابوالحاج', 'الامام', 'البتراء', 'البلبيسي',
         'الترابين', 'التلهوني', 'الجبارات', 'الجرَّاح', 'الجوابره', 'الجوالدة', 'الحجايا', 'الحوراني', 'الدعجة',
@@ -133,6 +133,28 @@ class Person implements Provider, PersonProvider
         'المومنى', 'المومنية', 'النسور', 'النشاشيبي', 'النعيمات', 'الهلسة', 'الوشاح', 'بني حسن', 'بني صقر', 'سحاب',
         'شمر', 'ضميدات', 'طلفاح', 'عابدين', 'عباد', 'عجلون', 'عقلة', 'عناسوة', 'مطير', 'معاني', 'وادي',
     ];
+
+    protected static $salutationsFemale = ['الدكتورة', 'المهندسة'];
+
+    protected static $salutationsMale = ['المهندس'];
+
+    /**
+     * @return string
+     * @example 'Dr.'
+     */
+    function academicTitleFemale()
+    {
+        return Person::$academicTitlesFemale[0];
+    }
+
+    /**
+     * @return string
+     * @example 'Prof. Dr.'
+     */
+    function academicTitleMale()
+    {
+        return Person::$academicTitlesMale[0];
+    }
 
     /**
      * @return string
@@ -159,5 +181,23 @@ class Person implements Provider, PersonProvider
     function lastName()
     {
         return Person::$lastName[0];
+    }
+
+    /**
+     * @return string
+     * @example 'Mrs.'
+     */
+    function salutationFemale()
+    {
+        return Person::$salutationsFemale[0];
+    }
+
+    /**
+     * @return string
+     * @example 'Mr.'
+     */
+    function salutationMale()
+    {
+        return Person::$salutationsMale[0];
     }
 }

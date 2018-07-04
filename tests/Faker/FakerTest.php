@@ -28,9 +28,13 @@ class FakerTest extends TestCase
     public function setUp()
     {
         $this->faker = new Faker([
+            'academicTitleFemale' => PersonProvider::class,
+            'academicTitleMale' => PersonProvider::class,
             'firstNameFemale' => PersonProvider::class,
             'firstNameMale' => PersonProvider::class,
             'lastName' => PersonProvider::class,
+            'salutationFemale' => PersonProvider::class,
+            'salutationMale' => PersonProvider::class,
             'fooBar' => PersonProvider::class,
         ]);
         $this->personProviderSpy = new PersonProviderSpy();
@@ -71,7 +75,17 @@ class FakerTest extends TestCase
         $this->faker->addProvider($this->personProviderSpy);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_FEMALE, $this->faker->firstNameFemale);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstNameMale);
+    }
+
+    /**
+     * @throws InterfaceNotImplementedException
+     */
+    public function testFakerReturnsDefaultGenderValueWhenGetIsCalledWithAmbiguousKnownFormatter()
+    {
+        $this->faker->addProvider($this->personProviderSpy);
+        $this->assertSame(PersonProviderSpy::ACADEMIC_TITLE_MALE, $this->faker->academicTitle);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstName);
+        $this->assertSame(PersonProviderSpy::SALUTATION_MALE, $this->faker->salutation);
     }
 
     /**
@@ -102,10 +116,13 @@ class FakerTest extends TestCase
     public function getPersonProviderFormatterProvider()
     {
         return [
+            ['academicTitleFemale'],
+            ['academicTitleMale'],
             ['firstNameFemale'],
             ['firstNameMale'],
             ['lastName'],
+            ['salutationFemale'],
+            ['salutationMale'],
         ];
     }
-
 }

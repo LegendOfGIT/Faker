@@ -87,6 +87,24 @@ class Person implements Provider, PersonProvider
 
     /**
      * @return string
+     * @example 'Dr.'
+     */
+    function academicTitleFemale()
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     * @example 'Prof. Dr.'
+     */
+    function academicTitleMale()
+    {
+        return '';
+    }
+
+    /**
+     * @return string
      * @example 'Janette'
      */
     function firstNameFemale()
@@ -110,5 +128,23 @@ class Person implements Provider, PersonProvider
     function lastName()
     {
         return Person::$lastName[0];
+    }
+
+    /**
+     * @return string
+     * @example 'Mrs.'
+     */
+    function salutationFemale()
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     * @example 'Mr.'
+     */
+    function salutationMale()
+    {
+        return '';
     }
 }

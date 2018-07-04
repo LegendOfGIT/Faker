@@ -4,7 +4,7 @@ namespace Faker\Integration;
 
 use Faker\Exception\InterfaceNotImplementedException;
 use Faker\Faker;
-use Faker\Provider\ru_RU\Person;
+use Faker\Provider\ar_JO\Person;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,8 +37,15 @@ class FakerTest extends TestCase
     public function testFakerReturnsValuesForPersonFormatters()
     {
         $this->faker->addProvider(new Person());
-        $this->assertSame('Александра', $this->faker->firstNameFemale);
-        $this->assertSame('Абрам', $this->faker->firstNameMale);
-        $this->assertSame('Смирнов', $this->faker->lastName);
+        $this->assertSame('السيد', $this->faker->academicTitle);
+        $this->assertSame('السيدة', $this->faker->academicTitleFemale);
+        $this->assertSame('السيد', $this->faker->academicTitleMale);
+        $this->assertSame('آدم', $this->faker->firstName);
+        $this->assertSame('آثار', $this->faker->firstNameFemale);
+        $this->assertSame('آدم', $this->faker->firstNameMale);
+        $this->assertSame('آلهامي', $this->faker->lastName);
+        $this->assertSame('المهندس', $this->faker->salutation);
+        $this->assertSame('الدكتورة', $this->faker->salutationFemale);
+        $this->assertSame('المهندس', $this->faker->salutationMale);
     }
 }

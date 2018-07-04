@@ -9,9 +9,15 @@ use InvalidArgumentException;
 
 /**
  * Faker
+ * @property string academicTitle
+ * @property string academicTitleFemale
+ * @property string academicTitleMale
  * @property string firstName
  * @property string firstNameFemale
  * @property string firstNameMale
+ * @property string salutation
+ * @property string salutationFemale
+ * @property string salutationMale
  * @property string lastName
  */
 class Faker
@@ -20,7 +26,9 @@ class Faker
      * @var array
      */
     protected $genderNameMapping = [
-        'firstName' => 'firstNameMale'
+        'academicTitle' => 'academicTitleMale',
+        'firstName' => 'firstNameMale',
+        'salutation' => 'salutationMale'
     ];
 
     /**
@@ -32,9 +40,13 @@ class Faker
      * @var array
      */
     protected $providerMapping = [
+        'academicTitleFemale' => PersonProvider::class,
+        'academicTitleMale' => PersonProvider::class,
         'firstNameFemale' => PersonProvider::class,
         'firstNameMale' => PersonProvider::class,
         'lastName' => PersonProvider::class,
+        'salutationFemale' => PersonProvider::class,
+        'salutationMale' => PersonProvider::class,
     ];
 
     /**

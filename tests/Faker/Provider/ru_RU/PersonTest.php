@@ -38,4 +38,17 @@ class PersonTest extends TestCase
     {
         $this->assertSame('Абрам', $this->provider->firstNameMale());
     }
+
+    public function testProviderReturnsLastName()
+    {
+        $this->assertSame('Смирнов', $this->provider->lastName());
+    }
+
+    public function testProviderReturnsEmptyForUnsupportedInformation()
+    {
+        $this->assertEmpty($this->provider->academicTitleFemale());
+        $this->assertEmpty($this->provider->academicTitleMale());
+        $this->assertEmpty($this->provider->salutationFemale());
+        $this->assertEmpty($this->provider->salutationMale());
+    }
 }
