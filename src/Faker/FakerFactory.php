@@ -12,6 +12,6 @@ class FakerFactory
      */
     public static function build()
     {
-        return new Faker();
+        return new Faker(new FakerRandomizer());
     }
 }

@@ -5,6 +5,7 @@ namespace Faker;
 use Faker\Exception\InterfaceNotImplementedException;
 use Faker\Provider\PersonProvider;
 use Faker\Spies\PersonProviderSpy;
+use Faker\Spies\RandomizerSpy;
 use Faker\Stubs\ProviderStub;
 use Faker\Stubs\TestStub;
 use InvalidArgumentException;
@@ -25,19 +26,29 @@ class FakerTest extends TestCase
      */
     private $personProviderSpy;
 
+    /**
+     * @var RandomizerSpy
+     */
+    private $randomizerSpy;
+
     public function setUp()
     {
-        $this->faker = new Faker([
-            'academicTitleFemale' => PersonProvider::class,
-            'academicTitleMale' => PersonProvider::class,
-            'firstNameFemale' => PersonProvider::class,
-            'firstNameMale' => PersonProvider::class,
-            'lastName' => PersonProvider::class,
-            'salutationFemale' => PersonProvider::class,
-            'salutationMale' => PersonProvider::class,
-            'fooBar' => PersonProvider::class,
-        ]);
         $this->personProviderSpy = new PersonProviderSpy();
+        $this->randomizerSpy = new RandomizerSpy();
+
+        $this->faker = new Faker(
+            $this->randomizerSpy,
+            [
+                'academicTitleFemale' => [PersonProvider::class, 'academicTitlesFemale'],
+                'academicTitleMale' => [PersonProvider::class, 'academicTitlesMale'],
+                'firstNameFemale' => [PersonProvider::class, 'firstNamesFemale'],
+                'firstNameMale' => [PersonProvider::class, 'firstNamesMale'],
+                'lastName' => [PersonProvider::class, 'lastNames'],
+                'salutationFemale' => [PersonProvider::class, 'salutationsFemale'],
+                'salutationMale' => [PersonProvider::class, 'salutationsMale'],
+                'fooBar' => [PersonProvider::class, 'foosbar'],
+            ]
+        );
     }
 
     /**
@@ -74,7 +85,7 @@ class FakerTest extends TestCase
     {
         $this->faker->addProvider($this->personProviderSpy);
         $this->assertSame(PersonProviderSpy::FIRST_NAME_FEMALE, $this->faker->firstNameFemale);
-        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstNameMale);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE_A, $this->faker->firstNameMale);
     }
 
     /**
@@ -84,8 +95,26 @@ class FakerTest extends TestCase
     {
         $this->faker->addProvider($this->personProviderSpy);
         $this->assertSame(PersonProviderSpy::ACADEMIC_TITLE_MALE, $this->faker->academicTitle);
-        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE, $this->faker->firstName);
+        $this->assertSame(PersonProviderSpy::FIRST_NAME_MALE_A, $this->faker->firstName);
         $this->assertSame(PersonProviderSpy::SALUTATION_MALE, $this->faker->salutation);
+    }
+
+    /**
+     * @throws InterfaceNotImplementedException
+     */
+    public function testFakerCallsRandomizerToReturnARandomizedElementFromProvider()
+    {
+        $this->faker->addProvider($this->personProviderSpy);
+
+        $this->faker->firstName;
+
+        $this->assertSame(
+            [
+                'function' => 'getRandomizedElement',
+                'elements' => [PersonProviderSpy::FIRST_NAME_MALE_A, PersonProviderSpy::FIRST_NAME_MALE_B]
+            ],
+            $this->randomizerSpy->getCalls()[0]
+        );
     }
 
     /**
@@ -100,14 +129,15 @@ class FakerTest extends TestCase
     /**
      * @dataProvider getPersonProviderFormatterProvider
      * @param string $formatterName
+     * @param string $calledFormatter
      * @throws InterfaceNotImplementedException
      */
-    public function testFakerCallsPersonProviderOnlyForRelatedFormatters($formatterName)
+    public function testFakerCallsPersonProviderOnlyForRelatedFormatters($formatterName, $calledFormatter)
     {
         $this->faker->addProvider($this->personProviderSpy);
         $this->faker->$formatterName;
 
-        $this->assertContains($formatterName, $this->personProviderSpy->getCalledFormatters());
+        $this->assertContains($calledFormatter, $this->personProviderSpy->getCalledFormatters());
     }
 
     /**
@@ -116,13 +146,13 @@ class FakerTest extends TestCase
     public function getPersonProviderFormatterProvider()
     {
         return [
-            ['academicTitleFemale'],
-            ['academicTitleMale'],
-            ['firstNameFemale'],
-            ['firstNameMale'],
-            ['lastName'],
-            ['salutationFemale'],
-            ['salutationMale'],
+            ['academicTitleFemale', 'academicTitlesFemale'],
+            ['academicTitleMale', 'academicTitlesMale'],
+            ['firstNameFemale', 'firstNamesFemale'],
+            ['firstNameMale', 'firstNamesMale'],
+            ['lastName', 'lastNames'],
+            ['salutationFemale', 'salutationsFemale'],
+            ['salutationMale', 'salutationsMale'],
         ];
     }
 }

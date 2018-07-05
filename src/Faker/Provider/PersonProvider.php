@@ -8,44 +8,44 @@ namespace Faker\Provider;
 interface PersonProvider
 {
     /**
-     * @return string
+     * @return array
      * @example 'Dr.'
      */
-    function academicTitleFemale();
+    function academicTitlesFemale();
 
     /**
-     * @return string
+     * @return array
      * @example 'Prof. Dr.'
      */
-    function academicTitleMale();
+    function academicTitlesMale();
 
     /**
-     * @return string
+     * @return array
      * @example 'Janette'
      */
-    function firstNameFemale();
+    function firstNamesFemale();
 
     /**
-     * @return string
+     * @return array
      * @example 'John'
      */
-    function firstNameMale();
+    function firstNamesMale();
 
     /**
-     * @return string
+     * @return array
      * @example 'Doe'
      */
-    function lastName();
+    function lastNames();
 
     /**
-     * @return string
+     * @return array
      * @example 'Mrs.'
      */
-    function salutationFemale();
+    function salutationsFemale();
 
     /**
-     * @return string
+     * @return array
      * @example 'Mr.'
      */
-    function salutationMale();
+    function salutationsMale();
 }

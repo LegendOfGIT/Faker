@@ -31,24 +31,24 @@ class PersonTest extends TestCase
 
     public function testProviderReturnsFemaleFirstName()
     {
-        $this->assertSame('Александра', $this->provider->firstNameFemale());
+        $this->assertSame('Александра', $this->provider->firstNamesFemale()[0]);
     }
 
     public function testProviderReturnsMaleFirstName()
     {
-        $this->assertSame('Абрам', $this->provider->firstNameMale());
+        $this->assertSame('Абрам', $this->provider->firstNamesMale()[0]);
     }
 
     public function testProviderReturnsLastName()
     {
-        $this->assertSame('Смирнов', $this->provider->lastName());
+        $this->assertSame('Смирнов', $this->provider->lastNames()[0]);
     }
 
     public function testProviderReturnsEmptyForUnsupportedInformation()
     {
-        $this->assertEmpty($this->provider->academicTitleFemale());
-        $this->assertEmpty($this->provider->academicTitleMale());
-        $this->assertEmpty($this->provider->salutationFemale());
-        $this->assertEmpty($this->provider->salutationMale());
+        $this->assertEmpty($this->provider->academicTitlesFemale());
+        $this->assertEmpty($this->provider->academicTitlesMale());
+        $this->assertEmpty($this->provider->salutationsFemale());
+        $this->assertEmpty($this->provider->salutationsMale());
     }
 }

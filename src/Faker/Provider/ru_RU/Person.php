@@ -14,7 +14,7 @@ class Person implements Provider, PersonProvider
      * {@link} http://ru.wikipedia.org/wiki/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5_%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B5_%D0%B8%D0%BC%D1%8F
      * {@link} http://masterrussian.com/aa031701a.shtml
      **/
-    protected static $firstNameMale = [
+    protected static $firstNamesMale = [
         'Абрам', 'Август', 'Адам', 'Адриан', 'Аким', 'Александр', 'Алексей', 'Альберт', 'Ананий', 'Анатолий', 'Андрей', 'Антон', 'Антонин',
         'Аполлон', 'Аркадий', 'Арсений', 'Артемий', 'Артур', 'Артём', 'Афанасий', 'Богдан', 'Болеслав', 'Борис', 'Бронислав', 'Вадим',
         'Валентин', 'Валериан', 'Валерий', 'Василий', 'Вениамин', 'Викентий', 'Виктор', 'Виль', 'Виталий', 'Витольд', 'Влад', 'Владимир',
@@ -31,7 +31,7 @@ class Person implements Provider, PersonProvider
     /**
      * {@link} http://masterrussian.com/aa031001a.shtml
      **/
-    protected static $firstNameFemale = [
+    protected static $firstNamesFemale = [
         'Александра', 'Алина', 'Алиса', 'Алла', 'Альбина', 'Алёна', 'Анастасия', 'Анжелика', 'Анна', 'Антонина', 'Анфиса', 'Валентина', 'Валерия',
         'Варвара', 'Василиса', 'Вера', 'Вероника', 'Виктория', 'Владлена', 'Галина', 'Дарья', 'Диана', 'Дина', 'Доминика', 'Ева',
         'Евгения', 'Екатерина', 'Елена', 'Елизавета', 'Жанна', 'Зинаида', 'Злата', 'Зоя', 'Изабелла', 'Изольда', 'Инга', 'Инесса',
@@ -45,7 +45,7 @@ class Person implements Provider, PersonProvider
     /**
      * {@link} http://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BE%D0%B1%D1%89%D0%B5%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D1%85_%D1%84%D0%B0%D0%BC%D0%B8%D0%BB%D0%B8%D0%B9
      **/
-    protected static $lastName = [
+    protected static $lastNames = [
         'Смирнов', 'Иванов', 'Кузнецов', 'Соколов', 'Попов', 'Лебедев', 'Козлов',
         'Новиков', 'Морозов', 'Петров', 'Волков', 'Соловьёв', 'Васильев', 'Зайцев',
         'Павлов', 'Семёнов', 'Голубев', 'Виноградов', 'Богданов', 'Воробьёв',
@@ -86,65 +86,65 @@ class Person implements Provider, PersonProvider
     ];
 
     /**
-     * @return string
+     * @return array
      * @example 'Dr.'
      */
-    function academicTitleFemale()
+    function academicTitlesFemale()
     {
-        return '';
+        return [];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Prof. Dr.'
      */
-    function academicTitleMale()
+    function academicTitlesMale()
     {
-        return '';
+        return [];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Janette'
      */
-    function firstNameFemale()
+    function firstNamesFemale()
     {
-        return Person::$firstNameFemale[0];
+        return Person::$firstNamesFemale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'John'
      */
-    function firstNameMale()
+    function firstNamesMale()
     {
-        return Person::$firstNameMale[0];
+        return Person::$firstNamesMale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Doe'
      */
-    function lastName()
+    function lastNames()
     {
-        return Person::$lastName[0];
+        return Person::$lastNames;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mrs.'
      */
-    function salutationFemale()
+    function salutationsFemale()
     {
-        return '';
+        return [];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mr.'
      */
-    function salutationMale()
+    function salutationsMale()
     {
-        return '';
+        return [];
     }
 }

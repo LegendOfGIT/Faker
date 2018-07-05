@@ -5,6 +5,7 @@ namespace Faker\Integration;
 use Faker\Exception\InterfaceNotImplementedException;
 use Faker\Faker;
 use Faker\Provider\ar_JO\Person;
+use Faker\Spies\RandomizerSpy;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class FakerTest extends TestCase
 
     public function setUp()
     {
-        $this->faker = new Faker();
+        $this->faker = new Faker(new RandomizerSpy());
     }
 
     /**
@@ -37,15 +38,15 @@ class FakerTest extends TestCase
     public function testFakerReturnsValuesForPersonFormatters()
     {
         $this->faker->addProvider(new Person());
-        $this->assertSame('السيد', $this->faker->academicTitle);
-        $this->assertSame('السيدة', $this->faker->academicTitleFemale);
-        $this->assertSame('السيد', $this->faker->academicTitleMale);
+        $this->assertSame('المهندس', $this->faker->academicTitle);
+        $this->assertSame('الدكتورة', $this->faker->academicTitleFemale);
+        $this->assertSame('المهندس', $this->faker->academicTitleMale);
         $this->assertSame('آدم', $this->faker->firstName);
         $this->assertSame('آثار', $this->faker->firstNameFemale);
         $this->assertSame('آدم', $this->faker->firstNameMale);
         $this->assertSame('آلهامي', $this->faker->lastName);
-        $this->assertSame('المهندس', $this->faker->salutation);
-        $this->assertSame('الدكتورة', $this->faker->salutationFemale);
-        $this->assertSame('المهندس', $this->faker->salutationMale);
+        $this->assertSame('السيد', $this->faker->salutation);
+        $this->assertSame('السيدة', $this->faker->salutationFemale);
+        $this->assertSame('السيد', $this->faker->salutationMale);
     }
 }

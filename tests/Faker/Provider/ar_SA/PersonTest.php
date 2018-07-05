@@ -1,12 +1,12 @@
 <?php
 
-namespace Faker\Provider\ar_JO;
+namespace Faker\Provider\ar_SA;
 
 use Faker\Provider\Provider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests of Arabic Jordan person provider
+ * Tests of saudi arabian person provider
  */
 class PersonTest extends TestCase
 {
@@ -36,7 +36,7 @@ class PersonTest extends TestCase
 
     public function testProviderReturnsAcademicTitleMale()
     {
-        $this->assertSame('المهندس', $this->provider->academicTitlesMale()[0]);
+        $this->assertSame('الأستاذ', $this->provider->academicTitlesMale()[0]);
     }
 
     public function testProviderReturnsFirstNameFemale()
@@ -51,7 +51,7 @@ class PersonTest extends TestCase
 
     public function testProviderReturnsLastName()
     {
-        $this->assertSame('آلهامي', $this->provider->lastNames()[0]);
+        $this->assertSame('العتيبي', $this->provider->lastNames()[0]);
     }
 
     public function testProviderReturnsSalutationFemale()

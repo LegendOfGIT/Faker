@@ -32,30 +32,38 @@ class Faker
     ];
 
     /**
+     * @var array
+     */
+    protected $providerInformationMapping = [
+        'academicTitleFemale' => [PersonProvider::class, 'academicTitlesFemale'],
+        'academicTitleMale' => [PersonProvider::class, 'academicTitlesMale'],
+        'firstNameFemale' => [PersonProvider::class, 'firstNamesFemale'],
+        'firstNameMale' => [PersonProvider::class, 'firstNamesMale'],
+        'lastName' => [PersonProvider::class, 'lastNames'],
+        'salutationFemale' => [PersonProvider::class, 'salutationsFemale'],
+        'salutationMale' => [PersonProvider::class, 'salutationsMale'],
+    ];
+
+    /**
      * @var Provider[]
      */
     protected $providers = [];
 
     /**
-     * @var array
+     * @var Randomizer
      */
-    protected $providerMapping = [
-        'academicTitleFemale' => PersonProvider::class,
-        'academicTitleMale' => PersonProvider::class,
-        'firstNameFemale' => PersonProvider::class,
-        'firstNameMale' => PersonProvider::class,
-        'lastName' => PersonProvider::class,
-        'salutationFemale' => PersonProvider::class,
-        'salutationMale' => PersonProvider::class,
-    ];
+    protected $randomizer;
 
     /**
-     * @param array|null $providerMapping
+     * @param Randomizer $randomizer
+     * @param array|null $providerInformationMapping
      */
-    public function __construct(array $providerMapping = null)
+    public function __construct(Randomizer $randomizer, array $providerInformationMapping = null)
     {
-        if (null !== $providerMapping) {
-            $this->providerMapping = $providerMapping;
+        $this->randomizer = $randomizer;
+
+        if (null !== $providerInformationMapping) {
+            $this->providerInformationMapping = $providerInformationMapping;
         }
     }
 
@@ -90,8 +98,10 @@ class Faker
         $name = $this->getDefaultGenderName($name);
 
         $provider = $this->getProviderByFormatter($name);
+        $providerFunction = $this->getProviderFunctionByFormatter($name);
 
-        return call_user_func([$provider, $name]);
+        $elements = call_user_func([$provider, $providerFunction]);
+        return $this->randomizer->getRandomizedElement($elements);
     }
 
     /**
@@ -129,12 +139,26 @@ class Faker
      * @return string
      * @throws InvalidArgumentException
      */
-    private function getProviderClassNameByFormatter($formatterName)
+    private function getProviderFunctionByFormatter($formatterName)
     {
-        if (!array_key_exists($formatterName, $this->providerMapping)) {
+        if (!array_key_exists($formatterName, $this->providerInformationMapping)) {
             throw new InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatterName));
         }
 
-        return $this->providerMapping[$formatterName];
+        return $this->providerInformationMapping[$formatterName][1];
+    }
+
+    /**
+     * @param string $formatterName
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    private function getProviderClassNameByFormatter($formatterName)
+    {
+        if (!array_key_exists($formatterName, $this->providerInformationMapping)) {
+            throw new InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatterName));
+        }
+
+        return $this->providerInformationMapping[$formatterName][0];
     }
 }

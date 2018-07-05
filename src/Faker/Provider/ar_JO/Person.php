@@ -10,14 +10,14 @@ use Faker\Provider\Provider;
  */
 class Person implements Provider, PersonProvider
 {
-    protected static $academicTitlesFemale = ['السيدة', 'الآنسة'];
+    protected static $academicTitlesFemale = ['الدكتورة', 'المهندسة'];
 
-    protected static $academicTitlesMale = ['السيد', 'الأستاذ', 'الدكتور'];
+    protected static $academicTitlesMale = ['المهندس', 'الأستاذ', 'الدكتور'];
 
     /**
      * @link http://muslim-names.us/
      */
-    protected static $firstNameMale = [
+    protected static $firstNamesMale = [
         'آدم', 'أبراهيم', 'أبو بكر', 'أحمد', 'أدهم', 'أسامة', 'أسعد', 'أسيد', 'أشرف', 'أكثم', 'أكرم', 'أمجد', 'أمين',
         'أنتوني', 'أنزور', 'أنس', 'أنمار', 'أنور', 'أواس', 'أوس', 'أيمن', 'أيهم', 'أيوب', 'إبراهيم', 'إسلام', 'إسماعيل',
         'إلياس', 'إياد', 'إيهاب', 'ابان', 'ابراهام', 'ابراهيم', 'ابراهيم محمد', 'اثير', 'احسان', 'احمد', 'ادريس', 'ادم',
@@ -79,7 +79,7 @@ class Person implements Provider, PersonProvider
     /**
      * @link http://muslim-names.us/
      */
-    protected static $firstNameFemale = [
+    protected static $firstNamesFemale = [
         'آثار', 'آلاء', 'آناء', 'آية', 'أبرار', 'أحلام', 'أروى', 'أريج', 'أسماء', 'أسيل', 'أصاله', 'أفنان', 'ألاء',
         'أماني', 'أمل', 'أميرة', 'أنسام', 'أنطوانيت', 'أنوار', 'أيات', 'أية', 'أيناس', 'أيه', 'ؤقهسفغ', 'إباء', 'إخلاص',
         'إسراء', 'إسلام', 'إكرام', 'إنعام', 'إيمان', 'إيناس', 'ابتهاج', 'ابتهال', 'ابرار', 'ابراهيم', 'اتيان', 'احسان',
@@ -122,7 +122,7 @@ class Person implements Provider, PersonProvider
         'وفاء', 'ولاء', 'ىمنة', 'يارا', 'ياسمين', 'يافا', 'يسرى', 'ينان', 'ﻟﻮﺗﺸﻴﺎ',
     ];
 
-    protected static $lastName = [
+    protected static $lastNames = [
         'آلهامي', 'أبو الرب', 'ابو رحمة', 'ابو سعده', 'ابو يوسف', 'ابوالحاج', 'الامام', 'البتراء', 'البلبيسي',
         'الترابين', 'التلهوني', 'الجبارات', 'الجرَّاح', 'الجوابره', 'الجوالدة', 'الحجايا', 'الحوراني', 'الدعجة',
         'الردايدة', 'الرشدان', 'الرفاعي', 'الروابدة', 'الروسان', 'الريماوي', 'الزعبية', 'الزوربا', 'السحاقات',
@@ -134,70 +134,70 @@ class Person implements Provider, PersonProvider
         'شمر', 'ضميدات', 'طلفاح', 'عابدين', 'عباد', 'عجلون', 'عقلة', 'عناسوة', 'مطير', 'معاني', 'وادي',
     ];
 
-    protected static $salutationsFemale = ['الدكتورة', 'المهندسة'];
+    protected static $salutationsFemale = ['السيدة', 'الآنسة'];
 
-    protected static $salutationsMale = ['المهندس'];
+    protected static $salutationsMale = ['السيد'];
 
     /**
-     * @return string
+     * @return array
      * @example 'Dr.'
      */
-    function academicTitleFemale()
+    function academicTitlesFemale()
     {
-        return Person::$academicTitlesFemale[0];
+        return Person::$academicTitlesFemale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Prof. Dr.'
      */
-    function academicTitleMale()
+    function academicTitlesMale()
     {
-        return Person::$academicTitlesMale[0];
+        return Person::$academicTitlesMale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Janette'
      */
-    function firstNameFemale()
+    function firstNamesFemale()
     {
-        return Person::$firstNameFemale[0];
+        return Person::$firstNamesFemale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'John'
      */
-    function firstNameMale()
+    function firstNamesMale()
     {
-        return Person::$firstNameMale[0];
+        return Person::$firstNamesMale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Doe'
      */
-    function lastName()
+    function lastNames()
     {
-        return Person::$lastName[0];
+        return Person::$lastNames;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mrs.'
      */
-    function salutationFemale()
+    function salutationsFemale()
     {
-        return Person::$salutationsFemale[0];
+        return Person::$salutationsFemale;
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mr.'
      */
-    function salutationMale()
+    function salutationsMale()
     {
-        return Person::$salutationsMale[0];
+        return Person::$salutationsMale;
     }
 }

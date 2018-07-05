@@ -13,7 +13,8 @@ class PersonProviderSpy implements Provider, PersonProvider
     const ACADEMIC_TITLE_FEMALE = 'Dr.';
     const ACADEMIC_TITLE_MALE = 'Prof. Dr.';
     const FIRST_NAME_FEMALE = 'Janette';
-    const FIRST_NAME_MALE = 'John';
+    const FIRST_NAME_MALE_A = 'John';
+    const FIRST_NAME_MALE_B = 'Jim';
     const LAST_NAME = 'Doe';
     const SALUTATION_FEMALE = 'Mrs.';
     const SALUTATION_MALE = 'Mr.';
@@ -24,73 +25,73 @@ class PersonProviderSpy implements Provider, PersonProvider
     private $calledFormatters = [];
 
     /**
-     * @return string
+     * @return array
      * @example 'Dr.'
      */
-    function academicTitleFemale()
+    function academicTitlesFemale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::ACADEMIC_TITLE_FEMALE;
+        return [static::ACADEMIC_TITLE_FEMALE];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Prof. Dr.'
      */
-    function academicTitleMale()
+    function academicTitlesMale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::ACADEMIC_TITLE_MALE;
+        return [static::ACADEMIC_TITLE_MALE];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Janette'
      */
-    function firstNameFemale()
+    function firstNamesFemale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::FIRST_NAME_FEMALE;
+        return [static::FIRST_NAME_FEMALE];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'John'
      */
-    function firstNameMale()
+    function firstNamesMale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::FIRST_NAME_MALE;
+        return [static::FIRST_NAME_MALE_A, static::FIRST_NAME_MALE_B];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Doe'
      */
-    function lastName()
+    function lastNames()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::LAST_NAME;
+        return [static::LAST_NAME];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mrs.'
      */
-    function salutationFemale()
+    function salutationsFemale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::SALUTATION_FEMALE;
+        return [static::SALUTATION_FEMALE];
     }
 
     /**
-     * @return string
+     * @return array
      * @example 'Mr.'
      */
-    function salutationMale()
+    function salutationsMale()
     {
         $this->calledFormatters[] = __FUNCTION__;
-        return static::SALUTATION_MALE;
+        return [static::SALUTATION_MALE];
     }
 
     /**
